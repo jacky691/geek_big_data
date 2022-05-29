@@ -1,0 +1,9 @@
+SELECT R.SEX,M.moviename NAME,R.AVGRATE,R.TOTAL
+ FROM (
+        SELECT U.sex SEX,R.movieid MOVIEID,avg(R.rate) AVGRATE,count(*) TOTAL
+          FROM t_rating_tianjie R INNER JOIN t_user_tianjie U ON R.userid = U.userid AND U.sex = 'M'
+      GROUP BY U.sex,R.movieid
+      ) R INNER JOIN t_movie_tianjie M ON R.MOVIEID = M.movieid
+WHERE R.TOTAL > 50
+ORDER BY R.AVGRATE DESC
+LIMIT 10;

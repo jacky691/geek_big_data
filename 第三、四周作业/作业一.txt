@@ -1,0 +1,3 @@
+SELECT U.age AGE ,avg(R.rate) AVGRATE
+  FROM (SELECT userid,rate FROM t_rating_tianjie WHERE movieid = 2116) R INNER JOIN t_user_tianjie U ON R.userid = U.userid
+  GROUP BY U.AGE;

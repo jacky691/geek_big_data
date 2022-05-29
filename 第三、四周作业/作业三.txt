@@ -1,0 +1,31 @@
+//评论数最多得女士ID
+ITH T1 AS
+(SELECT a.USERID USERID
+   FROM (
+          SELECT R.USERID USERID,count(*) r1,u.sex
+            FROM T_RATING_TIANJIE R INNER JOIN T_USER_TIANJIE U ON R.userid = U.userid 
+          GROUP BY R.userid,u.sex
+          HAVING u.sex = 'F'
+        ) A
+   ORDER BY A.r1 DESC
+   LIMIT 1
+)
+
+
+SELECT U.moviename,r2.avgrate
+  FROM
+      (
+      SELECT movieid,avg(rate) avgrate    
+       FROM T_RATING_TIANJIE  
+        GROUP BY movieid
+      ) R2
+      JOIN 
+      ( 
+      SELECT M2.movieid,M2.moviename
+        FROM T_RATING_TIANJIE R JOIN T_MOVIE_TIANJIE M2 ON R.movieid = M2.movieid
+        WHERE R.userid = (SELECT USERID FROM T1)
+        ORDER BY R.rate DESC
+        LIMIT 10
+      ) U
+      ON R2.movieid = U.movieid
+  ORDER BY U.MOVIEID

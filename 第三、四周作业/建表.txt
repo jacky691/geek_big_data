@@ -1,0 +1,52 @@
+//电影表
+CREATE TABLE t_movie_tianjie
+	(
+	   MovieId int, 
+                   MovieName string,
+                   MovieType String
+                 )
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.MultiDelimitSerDe'
+WITH SERDEPROPERTIES("field.delim"="::");
+
+
+load DATA local inpath  '/data/hive/movies.dat' INTO TABLE t_movie_tianjie;
+
+
+SELECT count(*) from t_movie_tianjie;
+
+//评价表
+CREATE TABLE t_rating_tianjie
+        (
+         userid INT,
+         movieid INT,
+         rate INT,
+         times STRING
+         )
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.MultiDelimitSerDe'
+WITH SERDEPROPERTIES("field.delim"="::");
+
+
+LOAD DATA LOCAL INPATH '/data/hive/ratings.dat' INTO TABLE t_rating_tianjie;
+
+
+SELECT count(*) FROM t_rating_tianjie;
+
+//用户表
+CREATE TABLE t_user_tianjie
+        (
+         userid int,
+         sex STRING,
+         age INT,
+         occupation INT,
+         zipcode STRING
+         )
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.MultiDelimitSerDe'
+WITH SERDEPROPERTIES("field.delim"="::");
+
+
+LOAD DATA LOCAL INPATH '/data/hive/users.dat' INTO TABLE t_user_tianjie;
+
+
+SELECT count(*) FROM t_user_tianjie;
+
+
